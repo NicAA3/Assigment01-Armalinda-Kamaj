@@ -1,0 +1,13 @@
+{
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.46.1",
+    "@types/jquery": "^3.5.30",
+    "@types/node": "^22.5.3"
+  },
+  "scripts": {},
+  "dependencies": {
+    "@faker-js/faker": "^9.0.0",
+    "dotenv": "^16.4.5"
+  }
+}
