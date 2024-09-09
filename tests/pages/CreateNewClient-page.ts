@@ -10,6 +10,9 @@ export class CreateNewClientPage {
   readonly emailTextfield: Locator;
   readonly telephoneTextfield: Locator;
   readonly saveButton: Locator;
+  fullName: string;
+  userEmail: string;
+  userPhoneNo: string;
 
 
 
@@ -22,18 +25,19 @@ export class CreateNewClientPage {
     this.emailTextfield = page.locator('input[type="email"]');
     this.telephoneTextfield = page.locator('div').filter({ hasText: /^Telephone$/ }).getByRole('textbox');
     this.saveButton = page.getByText('Save')
+
   }
 
   async createNewClientForm() {
 
     await this.viewButton.click()
     await this.createClienButton.click()
-    const fullName = faker.person.fullName();
-    await this.nameTextfield.fill(fullName)
-    const userEmail = faker.internet.email();
-    await this.emailTextfield.fill(userEmail)
-    const userPhoneNo = faker.phone.number();
-    await this.telephoneTextfield.fill(userEmail)
+    this.fullName = faker.person.fullName();
+    await this.nameTextfield.fill(this.fullName)
+    this.userEmail = faker.internet.email();
+    await this.emailTextfield.fill(this.userEmail)
+    this.userPhoneNo = faker.phone.number();
+    await this.telephoneTextfield.fill(this.userPhoneNo)
     await this.saveButton.click()
 
   }
