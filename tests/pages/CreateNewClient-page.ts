@@ -13,6 +13,7 @@ export class CreateNewClientPage {
   fullName: string;
   userEmail: string;
   userPhoneNo: string;
+  static fullName: readonly unknown[];
 
 
 
@@ -39,6 +40,12 @@ export class CreateNewClientPage {
     this.userPhoneNo = faker.phone.number();
     await this.telephoneTextfield.fill(this.userPhoneNo)
     await this.saveButton.click()
+
+    return {
+      fullName: this.fullName,
+      email: this.userEmail,
+      phoneNo: this.userPhoneNo,
+    };
 
   }
 }

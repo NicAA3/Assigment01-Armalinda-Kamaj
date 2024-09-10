@@ -11,6 +11,6 @@ export class DashboardPage {
   }
 
   async performLogout() {
-    //await this.logoutButton.click();
+    await this.logoutButton.click();
   }
 }
