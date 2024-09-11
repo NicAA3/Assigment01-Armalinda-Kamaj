@@ -7,6 +7,7 @@ import { CreateNewClientPage } from "./pages/CreateNewClient-page";
 import { CreateBillsPage } from "./pages/createBills-page";
 import { CreateReservationsPage } from "./pages/createReservations-page";
 import { EditClientPage } from "./pages/editClient-page";
+import { EditBillPage } from "./pages/editBill-page";
 
 test.beforeEach(async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -164,6 +165,23 @@ test.describe("Test suite 01", () => {
     // Assertions 
     await expect(element).toContainText(editClientPage.userEmail);
     await expect(element).toContainText(editClientPage.userPhoneNo);
+    await page.waitForTimeout(5000);
+
+  });
+
+  test("TC 07-edit bill", async ({ page }) => {
+
+    const editBillPage = new EditBillPage(page)
+    await editBillPage.goToViewBills()
+    await expect(page.getByText('Bills')).toBeVisible;
+
+    await editBillPage.editBillForm()
+
+    const filledValue = await editBillPage.editBillForm();
+    const element = page.locator(
+      "#app > div > div.bills > div:nth-child(1)"
+    );
+    await expect(element).toContainText(filledValue);
     await page.waitForTimeout(5000);
 
   });
