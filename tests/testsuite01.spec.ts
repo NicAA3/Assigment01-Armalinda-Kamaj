@@ -138,16 +138,17 @@ test.describe("Test suite 01", () => {
     await createReservationPage.goToCreateReservation()
     await expect(page.getByText('New Reservation')).toBeVisible();
 
-    await createReservationPage.fillNewReservationForm()
-    //const filledValue = await createReservationPage.fillNewReservationForm()
-    const element = page.locator('#app > div > div.reservations > div:nth-last-child(1)')
-    await expect(element).toContainText('Jonas Hellman')
-    await expect(element).toContainText('Client: 1')
-    await expect(element).toContainText('Room: 1')
-    await expect(element).toContainText('Bill: 1')
+    const { startDate, endDate } = await createReservationPage.fillNewReservationForm();
+    const element = page.locator('#app > div > div.reservations > div:nth-last-child(1)');
 
-    //await expect(element).toContainText(filledValue);
-
+    // Assersions
+    await expect(element).toContainText('Jonas Hellman');
+    await expect(element).toContainText('Client: 1');
+    await expect(element).toContainText('Room: 1');
+    await expect(element).toContainText('Bill: 1');
+    await expect(element).toContainText(startDate);
+    await expect(element).toContainText(endDate);
+    await element.waitFor({ state: 'visible' });
     await page.waitForTimeout(5000);
 
   });
