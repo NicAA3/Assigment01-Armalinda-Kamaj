@@ -8,6 +8,7 @@ import { CreateBillsPage } from "./pages/createBills-page";
 import { CreateReservationsPage } from "./pages/createReservations-page";
 import { EditClientPage } from "./pages/editClient-page";
 import { EditBillPage } from "./pages/editBill-page";
+import { DeleteReservationsPage } from "./pages/deleteReservations-page";
 
 test.beforeEach(async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -182,6 +183,25 @@ test.describe("Test suite 01", () => {
       "#app > div > div.bills > div:nth-child(1)"
     );
     await expect(element).toContainText(filledValue);
+    await page.waitForTimeout(5000);
+
+  });
+
+  test("TC 08-delete reservation", async ({ page }) => {
+
+    const deleteReservationsPage = new DeleteReservationsPage(page)
+    await deleteReservationsPage.goToViewReservation();
+
+    //Count the reservations before deletion
+    const reservationsBefore = await page.locator('img').count();
+    await deleteReservationsPage.DeleteReservationForm();
+
+    //Count the reservations after deletion
+    const reservationsAfter = await page.locator('img').count();
+
+    //assertion that the count decreased by 1
+    expect(reservationsAfter).toBe(reservationsBefore - 1);
+
     await page.waitForTimeout(5000);
 
   });
