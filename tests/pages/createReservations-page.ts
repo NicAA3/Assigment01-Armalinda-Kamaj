@@ -42,6 +42,7 @@ export class CreateReservationsPage {
         const startDate = faker.date.soon({ days: 30 }).toISOString().split('T')[0]; // Format YYYY-MM-DD
         await this.startTextfield.fill(startDate);
 
+
         const endDate = faker.date.soon({ days: 30, refDate: startDate }).toISOString().split('T')[0]; // Format YYYY-MM-DD
         await this.endTextField.fill(endDate);
 
@@ -52,7 +53,6 @@ export class CreateReservationsPage {
 
         // Click save
         await this.saveButton.click()
-        return startDate && endDate
-
+        return { startDate, endDate };
     }
 }
