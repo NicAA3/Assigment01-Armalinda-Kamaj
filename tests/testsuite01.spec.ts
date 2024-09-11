@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 //import { faker } from '@faker-js/faker';
 import { LoginPage } from "./pages/login-page";
 import { DashboardPage } from "./pages/dashboard-page";
-import { CreateRoomPage } from "./pages/CreateRoom-page";
+import { CreateRoomPage } from "./pages/createRoom-page";
 import { CreateNewClientPage } from "./pages/CreateNewClient-page";
 import { CreateBillsPage } from "./pages/createBills-page";
 import { CreateReservationsPage } from "./pages/createReservations-page";
