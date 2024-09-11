@@ -6,6 +6,7 @@ import { CreateRoomPage } from "./pages/CreateRoom-page";
 import { CreateNewClientPage } from "./pages/CreateNewClient-page";
 import { CreateBillsPage } from "./pages/createBills-page";
 import { CreateReservationsPage } from "./pages/createReservations-page";
+import { EditClientPage } from "./pages/editClient-page";
 
 test.beforeEach(async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -148,6 +149,21 @@ test.describe("Test suite 01", () => {
 
     //await expect(element).toContainText(filledValue);
 
+    await page.waitForTimeout(5000);
+
+  });
+
+  test("TC 06-edit client", async ({ page }) => {
+
+    const editClientPage = new EditClientPage(page)
+
+    await editClientPage.editClientForm()
+    const element = page.locator(
+      "#app > div > div.clients > div:nth-child(1)"
+    );
+    // Assertions 
+    await expect(element).toContainText(editClientPage.userEmail);
+    await expect(element).toContainText(editClientPage.userPhoneNo);
     await page.waitForTimeout(5000);
 
   });
