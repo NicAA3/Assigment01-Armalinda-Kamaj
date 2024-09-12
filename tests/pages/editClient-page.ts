@@ -5,7 +5,7 @@ export class EditClientPage {
   //Attributes
   readonly page: Page;
   readonly viewButton: Locator;
-  readonly actionButton: Locator;
+  readonly selectButton: Locator;
   readonly editButton: Locator;
   readonly emailTextfield: Locator;
   readonly telephoneTextfield: Locator;
@@ -19,18 +19,20 @@ export class EditClientPage {
     this.page = page;
     this.viewButton = page.locator('#app > div > div > div:nth-child(2) > a');
     //select first client
-    this.actionButton = page.locator('.action').first();
-    this.editButton = page.getByText('Edit');
+    this.selectButton = page.locator('.action').first();
+    this.editButton = page.getByText('Edit', { exact: true });
     this.emailTextfield = page.locator('input[type="email"]');
     this.telephoneTextfield = page.locator('div').filter({ hasText: /^Telephone$/ }).getByRole('textbox');
     this.saveButton = page.getByText('Save')
 
   }
 
+
+
   async editClientForm() {
 
     await this.viewButton.click()
-    await this.actionButton.click()
+    await this.selectButton.click()
     await this.editButton.click()
     //update user email adress
     this.userEmail = faker.internet.email();
