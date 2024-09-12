@@ -145,7 +145,7 @@ test.describe("Test suite 01", () => {
     const element = page.locator('#app > div > div.reservations > div:nth-last-child(1)');
 
     // Assersions
-    //I am commeting this assertion because after l runt the EditReservationTest the data get changed
+    //I am commeting this assertion because after I run the EditReservationTest the data get changed
     // await expect(element).toContainText('Jonas Hellman');
     //await expect(element).toContainText('Client: 1');
     await expect(element).toContainText('Room: 1');
@@ -185,8 +185,6 @@ test.describe("Test suite 01", () => {
     await editButtonPage.gotoReservation()
     // do a assert
     await expect(page.getByRole('heading', { name: 'Mikael Eriksson: 2020-04-01' })).toBeVisible();
-
-
   });
 
 
