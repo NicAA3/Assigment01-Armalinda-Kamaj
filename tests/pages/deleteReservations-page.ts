@@ -5,7 +5,7 @@ export class DeleteReservationsPage {
     //Attributes
     readonly page: Page;
     readonly viewButton: Locator;
-    readonly selectBill: Locator;
+    readonly selectReservation: Locator;
     readonly editButton: Locator;
     readonly DeleteButton: Locator;
 
@@ -13,7 +13,7 @@ export class DeleteReservationsPage {
     constructor(page: Page) {
         this.page = page;
         this.viewButton = page.locator('#app > div > div > div:nth-child(4) > a');
-        this.selectBill = page.getByRole('img').last()//select the last bill
+        this.selectReservation = page.getByRole('img').last()//select the last bill
         this.editButton = page.getByText('Edit');
         this.DeleteButton = page.getByText('Delete');
     }
@@ -27,7 +27,7 @@ export class DeleteReservationsPage {
 
 
     async DeleteReservationForm() {
-        await this.selectBill.click();
+        await this.selectReservation.click();
         await this.editButton.click();
         await this.DeleteButton.click();
     }
