@@ -3,12 +3,14 @@ import { test, expect } from "@playwright/test";
 import { LoginPage } from "./pages/login-page";
 import { DashboardPage } from "./pages/dashboard-page";
 import { CreateRoomPage } from "./pages/createRoom-page";
-import { CreateNewClientPage } from "./pages/createNewClient-page";
+import { CreateNewClientPage } from "./pages/CreateNewClient-page";
 import { CreateBillsPage } from "./pages/createBills-page";
 import { CreateReservationsPage } from "./pages/createReservations-page";
-import { EditPage } from "./pages/editButton-page"
-
-
+import { EditClientPage } from "./pages/editClient-page";
+import { EditBillPage } from "./pages/editBill-page";
+import { DeleteReservationsPage } from "./pages/deleteReservations-page";
+import { EditRoomPage } from "./pages/editRoom-page";
+import { EditReservationPage } from "./pages/editReservation-page";
 
 test.beforeEach(async ({ page }) => {
   const loginPage = new LoginPage(page);
@@ -157,35 +159,82 @@ test.describe("Test suite 01", () => {
 
   });
 
-  test("TC 06-test EditRoomButton", async ({ page }) => {
-    const editButtonPage = new EditPage(page)
-    await editButtonPage.gotoRoom()
-    // do a assert
-    await expect(page.getByRole('heading', { name: 'Floor 1, Room 200' })).toHaveText(' Floor 1, Room 200')
-  });
+  test("TC 06-edit Room", async ({ page }) => {
+
+    const editRoomPage = new EditRoomPage(page)
+    await editRoomPage.goToViewRooms()
+    await expect(page.getByText('Rooms')).toBeVisible;
 
 
-  test("TC 07-test EditClientButton", async ({ page }) => {
-    const editButtonPage = new EditPage(page)
-    await editButtonPage.gotoClient()
-    // do a assert
-    await expect(page.getByRole('heading', { name: 'Edit Test (#1)' })).toHaveText('Edit Test (#1)')
-
-  });
-
-  test("TC 08-test EditBillButton", async ({ page }) => {
-    const editButtonPage = new EditPage(page)
-    await editButtonPage.gotoBill()
-    // do a assert
-    await expect(page.locator('#app > div > div.bills > div:nth-child(1)')).toHaveText(' ID: 1Value: 10000krPaid: No ')
+    const filledValue = await editRoomPage.editRoomForm();
+    const element = page.locator(
+      "#app > div > div.rooms > div:nth-child(1) > div:nth-child(2) > div.price"
+    );
+    await expect(element).toContainText(filledValue);
+    await page.waitForTimeout(5000);
 
   });
-  test("TC 09-test EditReservationsButton", async ({ page }) => {
-    const editButtonPage = new EditPage(page)
-    await editButtonPage.gotoReservation()
-    // do a assert
-    await expect(page.getByRole('heading', { name: 'Mikael Eriksson: 2020-04-01' })).toBeVisible();
+
+  test("TC 07-edit client", async ({ page }) => {
+
+    const editClientPage = new EditClientPage(page)
+
+    await editClientPage.editClientForm()
+    const element = page.locator(
+      "#app > div > div.clients > div:nth-child(1)"
+    );
+    // Assertions 
+    await expect(element).toContainText(editClientPage.userEmail);
+    await expect(element).toContainText(editClientPage.userPhoneNo);
+    await page.waitForTimeout(5000);
+
   });
 
+  test("TC 08-edit bill", async ({ page }) => {
 
+    const editBillPage = new EditBillPage(page)
+    await editBillPage.goToViewBills()
+    await expect(page.getByText('Bills')).toBeVisible;
+
+    const filledValue = await editBillPage.editBillForm();
+    const element = page.locator(
+      "#app > div > div.bills > div:nth-child(1)"
+    );
+    await expect(element).toContainText(filledValue);
+    await page.waitForTimeout(5000);
+
+  });
+  test("TC 09-edit Reservation", async ({ page }) => {
+
+    const editReservationPage = new EditReservationPage(page)
+    await editReservationPage.goToViewReservations()
+    await expect(page.getByText('Reservations')).toBeVisible;
+
+    await editReservationPage.editReservationForm();
+    const element = page.locator(
+      "#app > div > div.reservations > div:last-child > div.room"
+    );
+    await expect(element).toContainText('Room: 2');
+
+    await page.waitForTimeout(5000);
+
+  });
+  test("TC 10-delete reservation", async ({ page }) => {
+
+    const deleteReservationsPage = new DeleteReservationsPage(page)
+    await deleteReservationsPage.goToViewReservation();
+
+    //Count the reservations before deletion
+    const reservationsBefore = await page.locator('.reservation').count();
+    await deleteReservationsPage.DeleteReservationForm();
+
+    //Count the reservations after deletion
+    const reservationsAfter = await page.locator('.reservation').count();
+
+    //assertion that the count decreased by 1
+    expect(reservationsAfter).toBe(reservationsBefore - 1);
+
+    await page.waitForTimeout(5000);
+
+  });
 });
