@@ -63,8 +63,9 @@ test.describe("Test suite 01", () => {
   test("TC 02-create room", async ({ page }) => {
 
     const createRoomPage = new CreateRoomPage(page);
+    const dashboardPage = new DashboardPage(page)
     //Enter to room page
-    await createRoomPage.goToViewRoom();
+    await dashboardPage.gotoRoom();
     await expect(page.getByText('Rooms')).toBeVisible()
     //Enter to Create room Form
     await createRoomPage.goToCreateRoom();
@@ -98,7 +99,9 @@ test.describe("Test suite 01", () => {
   test("TC 03-create new client", async ({ page }) => {
 
     const createNewClientPage = new CreateNewClientPage(page)
+    const dashboardPage = new DashboardPage(page)
 
+    await dashboardPage.gotoClient()
     await createNewClientPage.createNewClientForm()
     const element = page.locator(
       "#app > div > div.clients > div:nth-last-child(1)"

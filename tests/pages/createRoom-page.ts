@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 export class CreateRoomPage {
   //Attributes
   readonly page: Page;
-  readonly viewButton: Locator;
+
   readonly newRoomButton: Locator;
   readonly selectCategory: Locator;
   readonly selectNumber: Locator;
@@ -16,7 +16,6 @@ export class CreateRoomPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.viewButton = page.locator("#app > div > div > div:nth-child(1) > a")
     this.newRoomButton = page.getByRole('link', { name: 'Create Room' })
     this.selectCategory = page.getByRole('combobox');
     this.selectNumber = page.locator('div').filter({ hasText: /^Number$/ }).getByRole('spinbutton')
@@ -28,14 +27,9 @@ export class CreateRoomPage {
 
   }
 
-  async goToViewRoom() {
-    await this.viewButton.click();
-  }
-
   async goToCreateRoom() {
     await this.newRoomButton.click()
   }
-
 
   async fillOutCreateRoomsForm() {
 

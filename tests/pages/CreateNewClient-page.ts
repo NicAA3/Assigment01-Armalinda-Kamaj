@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker';
 export class CreateNewClientPage {
   //Attributes
   readonly page: Page;
-  readonly viewButton: Locator;
+
   readonly createClienButton: Locator;
   readonly nameTextfield: Locator;
   readonly emailTextfield: Locator;
@@ -19,8 +19,8 @@ export class CreateNewClientPage {
 
   constructor(page: Page) {
     this.page = page;
-    // this.viewButton = page.locator('div').filter({ hasText: /^ClientsNumber: 2View$/ }).getByRole('link')
-    this.viewButton = page.locator('#app > div > div > div:nth-child(2) > a')
+
+
     this.createClienButton = page.getByRole('link', { name: 'Create Client' });
     this.nameTextfield = page.locator('div').filter({ hasText: /^Name$/ }).getByRole('textbox');
     this.emailTextfield = page.locator('input[type="email"]');
@@ -30,8 +30,6 @@ export class CreateNewClientPage {
   }
 
   async createNewClientForm() {
-
-    await this.viewButton.click()
     await this.createClienButton.click()
     this.fullName = faker.person.fullName();
     await this.nameTextfield.fill(this.fullName)
