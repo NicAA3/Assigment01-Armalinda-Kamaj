@@ -132,8 +132,6 @@ test.describe("Test suite 01", () => {
     await expect(element).toContainText("ID");
     await expect(element).toContainText(filledValue);
 
-    await page.waitForTimeout(5000);
-
   });
 
   test("TC 05-create new reservation", async ({ page }) => {
@@ -158,7 +156,6 @@ test.describe("Test suite 01", () => {
     await expect(element).toContainText(startDate);
     await expect(element).toContainText(endDate);
     await element.waitFor({ state: 'visible' });
-    await page.waitForTimeout(5000);
 
   });
 
@@ -174,7 +171,6 @@ test.describe("Test suite 01", () => {
       "#app > div > div.rooms > div:nth-child(1) > div:nth-child(2) > div.price"
     );
     await expect(element).toContainText(filledValue);
-    await page.waitForTimeout(5000);
 
   });
 
@@ -189,7 +185,7 @@ test.describe("Test suite 01", () => {
     // Assertions 
     await expect(element).toContainText(editClientPage.userEmail);
     await expect(element).toContainText(editClientPage.userPhoneNo);
-    await page.waitForTimeout(5000);
+
 
   });
 
@@ -204,7 +200,7 @@ test.describe("Test suite 01", () => {
       "#app > div > div.bills > div:nth-child(1)"
     );
     await expect(element).toContainText(filledValue);
-    await page.waitForTimeout(5000);
+
 
   });
   test("TC 09-edit Reservation", async ({ page }) => {
@@ -218,8 +214,6 @@ test.describe("Test suite 01", () => {
       "#app > div > div.reservations > div:last-child > div.room"
     );
     await expect(element).toContainText('Room: 2');
-
-    await page.waitForTimeout(5000);
 
   });
   test("TC 10-delete reservation", async ({ page }) => {
@@ -236,8 +230,6 @@ test.describe("Test suite 01", () => {
 
     //assertion that the count decreased by 1
     expect(reservationsAfter).toBe(reservationsBefore - 1);
-
-    await page.waitForTimeout(5000);
 
   });
 });
